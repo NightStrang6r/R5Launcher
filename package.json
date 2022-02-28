@@ -1,0 +1,18 @@
+{
+    "name": "r5launcher",
+    "version": "1.0.0",
+    "description": "",
+    "main": "app.js",
+    "scripts": {
+        "start": "electron ."
+    },
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "electron": "^14.2.6",
+        "electron-rebuild": "^3.2.3"
+    },
+    "dependencies": {
+        "webtorrent": "^1.8.3"
+    }
+}
