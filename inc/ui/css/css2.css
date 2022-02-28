@@ -247,3 +247,22 @@ body {
 .no-view {
     display: none;
 }
+
+#btn-image-settings {
+    padding-top: 5px;
+}
+
+#btn-image-close {
+    padding-top: 5px;
+    padding-left: 13px;
+}
+
+#btn-image-question {
+    padding-top: 5px;
+    padding-left: 13px;
+}
+
+#btn-image-minimize {
+    padding-top: 5px;
+    padding-left: 13px;
+}
