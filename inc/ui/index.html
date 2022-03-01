@@ -94,7 +94,7 @@
                         text-align: center;
                         z-index: 8;
                         top: 615px;
-                        left: calc(50% - 600px + 908px);
+                        left: -24.5px;
                         width: 239px;
                         height: 63px;
                     }
@@ -321,7 +321,7 @@
                     #rec363027571 .tn-elem[data-elem-id="1633536899426"] {
                         z-index: 16;
                         top: 0px;
-                        left: calc(50% - 600px + -40px);
+                        left: -24px;
                         width: 1129px;
                         height: 39px;
                     }
@@ -393,7 +393,7 @@
                             id="btn-settings"
                             data-elem-id="1633461069128"
                             data-elem-type="button"
-                            data-field-top-value="646"
+                            data-field-top-value="640"
                             data-field-left-value="1169"
                             data-field-height-value="33"
                             data-field-width-value="33"
@@ -411,6 +411,7 @@
                         <!-- Download progress grey -->
                         <div
                             class="no-view t396__elem tn-elem tn-elem__3630275711633461375390"
+                            id="progressbar-grey"
                             data-elem-id="1633461375390"
                             data-elem-type="shape"
                             data-field-top-value="671"
@@ -430,12 +431,13 @@
                         <!-- Download progress main -->
                         <div
                             class="no-view t396__elem tn-elem tn-elem__3630275711633461565370"
+                            id="progressbar-main"
                             data-elem-id="1633461565370"
                             data-elem-type="shape"
                             data-field-top-value="671"
                             data-field-left-value="713"
                             data-field-height-value="8"
-                            data-field-width-value="434"
+                            data-field-width-value="0"
                             data-field-axisy-value="top"
                             data-field-axisx-value="left"
                             data-field-container-value="grid"
@@ -448,13 +450,14 @@
                         </div>
                         <!-- Pause Button -->
                         <div
-                            class="no-view t396__elem tn-elem tn-elem__3630275711633461652675"
+                            class="btn no-view t396__elem tn-elem tn-elem__3630275711633461652675"
+                            id="btn-pause"
                             data-elem-id="1633461652675"
                             data-elem-type="button"
-                            data-field-top-value="645"
-                            data-field-left-value="710"
-                            data-field-height-value="19"
-                            data-field-width-value="19"
+                            data-field-top-value="630"
+                            data-field-left-value="713"
+                            data-field-height-value="35"
+                            data-field-width-value="35"
                             data-field-axisy-value="top"
                             data-field-axisx-value="left"
                             data-field-container-value="grid"
@@ -463,16 +466,17 @@
                             data-field-heightunits-value
                             data-field-widthunits-value
                         >
-                            <div class="tn-atom"></div>
+                            <div class="tn-atom"><img id="image-pause" style="margin: 0px; width: 16px; height: 16px;"/></div>
                         </div>
                         <!-- Progress text -->
                         <div
                             class="no-view t396__elem tn-elem tn-elem__3630275711633461878282"
+                            id="text-progress"
                             data-elem-id="1633461878282"
                             data-elem-type="text"
                             data-field-top-value="645"
-                            data-field-left-value="740"
-                            data-field-width-value="118"
+                            data-field-left-value="755"
+                            data-field-width-value="300"
                             data-field-axisy-value="top"
                             data-field-axisx-value="left"
                             data-field-container-value="grid"
@@ -481,7 +485,7 @@
                             data-field-heightunits-value
                             data-field-widthunits-value="px"
                         >
-                            <div class="tn-atom" field="tn_text_1633461878282">15.4 МБ / 3.8 GB</div>
+                            <div class="tn-atom" id="text-field-progress" field="tn_text_1633461878282">15.4 МБ / 3.8 GB</div>
                         </div>
                         <!-- Background image -->
                         <div
@@ -569,7 +573,7 @@
                             data-elem-id="1633536899426"
                             data-elem-type="shape"
                             data-field-top-value="0"
-                            data-field-left-value="-24.5"
+                            data-field-left-value="-40"
                             data-field-height-value="39"
                             data-field-width-value="1129"
                             data-field-axisy-value="top"
