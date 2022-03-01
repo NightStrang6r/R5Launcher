@@ -1,12 +1,14 @@
 // Libraries
 const {app, BrowserWindow, Menu, ipcMain, dialog, globalShortcut} = require('electron');
-const path = require('path');
 const WebTorrent = require('webtorrent');
+const Downloader = require('download');
+const Unzipper = require('extract-zip');
+const { exit } = require('process');
+const ncp = require('ncp').ncp;
 const fs = require('fs');
 
 const client = new WebTorrent();
 const config = require('./config.json');
-const { exit } = require('process');
 
 let window = null;
 let downloadUIInterval = null;
@@ -60,11 +62,55 @@ function download(ev) {
             updateConfig(config);
 
             window.webContents.send('set-download-visible');
-            torrent(result.filePaths[0]);
+            installFromZip(config.scripts, config.path, "scripts");
+            
+            //torrent(result.filePaths[0]);
         }
     }).catch(err => {
         console.log(err);
     });
+}
+
+function installFromZip(url, path, filename) {
+    downloadFile(url, path).then(() => {
+        let zipFile = getFileNameContains(`.zip`, path);
+        unzipFile(`${path}/${zipFile}`, path).then(() => {
+            fs.unlinkSync(`${path}/${zipFile}`);
+            let sourceDir = getFileNameContains(filename, path);
+            let r5dir = getFileNameContains(`R5`, path);
+            copyDir(`${path}/${sourceDir}`, `${path}/${r5dir}`).then(() => {
+                //deleteFolder(`${path}/${sourceDir}`);
+            });
+        });
+    });
+}
+
+function getFileNameContains(content, path) {
+    let result = null;
+    let files = fs.readdirSync(path);
+    for (const file of files) {
+        if(file.includes(content)) {
+            result = file;
+            break;
+        }
+    }
+    return result;
+}
+
+function deleteFolder(path) {
+    let files = [];
+    if(fs.existsSync(path)) {
+        files = fs.readdirSync(path);
+        files.forEach(function(file, index){
+            let curPath = path + "/" + file;
+            if(fs.statSync(curPath).isDirectory()) {
+                deleteFolder(curPath);
+            } else {
+                fs.unlinkSync(curPath);
+            }
+        });
+        fs.rmdirSync(path);
+    }
 }
 
 function torrent(path) {
@@ -80,12 +126,12 @@ function torrent(path) {
         }, 1000);
 
         torrent.on('error', () => {
-            console.log('Some error or connection destroyed')
+            console.log('Some error or connection destroyed');
             clearInterval(downloadUIInterval);
         });
 
         torrent.on('done', () => {
-            console.log('Torrent download finished')
+            console.log('Torrent download finished');
             clearInterval(downloadUIInterval);
         });
     });
@@ -108,6 +154,61 @@ function updateConfig(config) {
         result = true;
     } catch(err) {
         console.log(`Ошибка записи файла: ${err}`);
+        result = false;
+    }
+    return result;
+}
+
+async function downloadFile(url, path) {
+    let result = false;
+    try {
+        console.log(`Started download of ${url}`);
+
+        await Downloader(url, `${path}`);
+
+        console.log('Download completed');
+        result = true;
+    } catch(err) {
+        console.log(`Failed to download file. Error: ${err}`);
+        result = false;
+    }
+    return result;
+}
+
+async function unzipFile(pathFrom, pathTo) {
+    let result = false;
+    try {
+        console.log(`Started unzip of ${pathFrom}`);
+
+        await Unzipper(pathFrom, { dir: pathTo }, function (err) {
+            console.log(`Failed to unzip file. Error: ${err}`);
+            result = false;
+        });
+
+        console.log('Unzip completed');
+        result = true;
+    } catch(err) {
+        console.log(`Failed to unzip file. Error: ${err}`);
+        result = false;
+    }
+    return result;
+}
+
+async function copyDir(from, to) {
+    let result = false;
+    try {
+        console.log(`Started copy to ${to}`);
+
+        await ncp(from, to, function (err) {
+            if (err) {
+                return console.error(err);
+            }
+        });
+
+        console.log('Copy completed');
+        result = true;
+    } catch(err) {
+        console.log(`Failed to copy. Error: ${err}`);
         result = false;
     }
     return result;
