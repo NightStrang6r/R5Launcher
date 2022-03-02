@@ -28,6 +28,12 @@ pauseBtn.addEventListener('click', (event) => {
 
 ipcRenderer.on('set-download-visible', (event) => {
     setDownloadVisible();
+    pauseImage.src = "images/resume.png";
+    progressTextField.innerHTML = '';
+});
+
+ipcRenderer.on('set-download-started', (event) => {
+    setDownloadVisible();
     pauseImage.src = "images/pause.png";
     progressTextField.innerHTML = 'Инициализация загрузки...';
 });
